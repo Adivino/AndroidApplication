@@ -55,8 +55,10 @@
                             android:layout_weight="0.8"
                             android:paddingLeft="16dp"
                             android:layout_height="match_parent"
+                            android:textColorHint="@color/md_white_1000"
+                            android:textColor="@color/md_white_1000"
                             android:id="@+id/search_edit_text"
-                            android:background="@color/md_grey_200"
+                            android:background="@color/colorPrimaryTransparent"
                             android:hint="Search..."/>
 
                         <ImageView

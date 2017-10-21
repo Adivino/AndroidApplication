@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -311,6 +312,21 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
         String MicrosoftOCRResult = analyseScreenWithMicrosoft();
         if(textIsPlayer(text) && !dialogVisible ) {
 
+
+            new Thread(new Runnable() {
+                public void run() {
+
+                    try{
+                        Server server = new Server();
+                        Log.e("RESPONSE", server.post("http://40.114.51.138:9612/get_score","{\"detected_text\" : \"Rooney\"}"));
+
+                    } catch (Exception e) {
+                        Log.e("RESPONSE:ERROR", "error");
+                    }
+                }
+            }).start();
+
+
             this.runOnUiThread(new Runnable() {
                 public void run() {
                     dialogVisible = true;
@@ -319,9 +335,9 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                             .content("Is the player " + text +"?")
                             .positiveText("Yes")
                             .negativeText("No")
-                            .onAny(new MaterialDialog.SingleButtonCallback() {
+                            .dismissListener(new DialogInterface.OnDismissListener() {
                                 @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                public void onDismiss(DialogInterface dialog) {
                                     dialogVisible = false;
                                 }
                             })
