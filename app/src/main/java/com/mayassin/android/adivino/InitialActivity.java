@@ -75,13 +75,15 @@ public class InitialActivity extends AppCompatActivity {
         searchText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
         cameraIconImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start Camera OCR Activity
+                Intent intent = new Intent(getApplicationContext(), OCRActivity.class);
+                startActivity(intent);
             }
         });
 
