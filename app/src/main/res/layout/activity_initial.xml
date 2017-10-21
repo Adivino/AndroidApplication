@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout"
+    tools:context="com.mayassin.android.adivino.InitialActivity">
+
+        <VideoView
+            android:id="@+id/background_video"
+            android:layout_width="1500px"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    android:layout_margin="48dp"
+                    android:layout_height="250dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/place_holder_150"
+                        android:paddingBottom="20dp"
+                        android:layout_height="wrap_content" />
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:weightSum="1"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_height="wrap_content">
+
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
+                            android:paddingLeft="16dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/search_edit_text"
+                            android:background="@color/md_grey_200"
+                            android:hint="Search..."/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:id="@+id/camera_icon_image"
+                            android:layout_gravity="end"
+                            android:layout_weight="0.2"
+                            android:src="@drawable/place_holder_150"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+        </RelativeLayout>
+
+</RelativeLayout>
