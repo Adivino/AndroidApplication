@@ -54,11 +54,13 @@
                             android:layout_width="0dp"
                             android:layout_weight="0.8"
                             android:paddingLeft="16dp"
+                            android:textStyle="bold"
                             android:layout_height="match_parent"
                             android:textColorHint="@color/md_white_1000"
                             android:textColor="@color/md_white_1000"
                             android:id="@+id/search_edit_text"
                             android:background="@color/colorPrimaryTransparent"
+                            android:backgroundTint="@color/colorPrimaryTransparent"
                             android:hint="Search..."/>
 
                         <ImageView
@@ -66,7 +68,7 @@
                             android:id="@+id/camera_icon_image"
                             android:layout_gravity="end"
                             android:layout_weight="0.2"
-                            android:src="@drawable/place_holder_150"
+                            android:src="@drawable/ic_camera_alt_white_48dp"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>

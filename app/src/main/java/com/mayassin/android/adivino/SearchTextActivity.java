@@ -28,6 +28,7 @@ public class SearchTextActivity extends AppCompatActivity {
 
     private void initialize() {
         initializeViews();
+        knownPlayers = this.getResources().getStringArray(R.array.player_names);
 
         initializeSearchKeyboard();
 

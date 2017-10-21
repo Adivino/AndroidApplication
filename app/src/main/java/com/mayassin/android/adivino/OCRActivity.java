@@ -117,6 +117,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
 
 
 
+    String[] knownPlayers = new String[]{"Messi", "Messy", "Ronaldo" , "Ronald", "Otters", "Others"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,8 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
         } else {
             requestCameraPermission();
         }
+
+        knownPlayers = this.getResources().getStringArray(R.array.player_names);
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +177,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
 
     private void createCameraSource() {
         Context context = getApplicationContext();
+
 
         // TODO: Create the TextRecognizer
         TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
@@ -310,15 +314,16 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
     @Override
     public void MatchFound(final String text) {
         String MicrosoftOCRResult = analyseScreenWithMicrosoft();
-        if(textIsPlayer(text) && !dialogVisible ) {
+        final String analyzedText = textIsPlayer(text.toLowerCase());
+        if(analyzedText != "" && !dialogVisible ) {
 
 
             new Thread(new Runnable() {
                 public void run() {
 
-                    try{
+                    try {
                         Server server = new Server();
-                        Log.e("RESPONSE", server.post("http://40.114.51.138:9612/get_score","{\"detected_text\" : \"Rooney\"}"));
+                        Log.e("RESPONSE", server.post("http://40.114.51.138:9612/get_score", "{\"detected_text\" : \"Rooney\"}"));
 
                     } catch (Exception e) {
                         Log.e("RESPONSE:ERROR", "error");
@@ -332,7 +337,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                     dialogVisible = true;
                     correctPlayerDialog = new MaterialDialog.Builder(OCRActivity.this)
                             .title("Player Detected")
-                            .content("Is the player " + text +"?")
+                            .content("Is the player " + analyzedText + "?")
                             .positiveText("Yes")
                             .negativeText("No")
                             .dismissListener(new DialogInterface.OnDismissListener() {
@@ -346,26 +351,25 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                     correctPlayerDialog.show();
                 }
             });
-
         }
-
-
-
-//        Snackbar snack = Snackbar.make(mPreview, "TEXT FOUND: " +text, Snackbar.LENGTH_LONG);
-//        View view = snack.getView();
-//        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
-//        params.gravity = Gravity.TOP;
-//        view.setLayoutParams(params);
-//        snack.show();
-
     }
 
-    private boolean textIsPlayer(String name) {
+    private String textIsPlayer(String name) {
         if (name.length() > 15) {
-            return false;
+            return "";
         }
 
-        return true;
+        for(String player : knownPlayers){
+            String firstHalfOfName = name.substring(0, name.length()/2);
+            String secondHalfOfName = name.substring(name.length()/2, name.length());
+
+            if(player.contains(name)){
+                String test = "huh";
+                return player;
+            }
+        }
+
+        return "";
     }
 
     private String analyseScreenWithMicrosoft() {
@@ -382,7 +386,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
             ocr = client.recognizeText(inputStream, LanguageCodes.English, true);
             result = gson.toJson(ocr);
         } catch (Exception e) {
-            Log.d("ERROR MICROSOFT:", e.getMessage());
+            //Log.d("ERROR MICROSOFT:", e.getMessage());
         }
         return result;
 
