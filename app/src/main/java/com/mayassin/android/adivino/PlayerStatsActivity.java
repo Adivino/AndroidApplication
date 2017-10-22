@@ -122,6 +122,9 @@ public class PlayerStatsActivity extends AppCompatActivity {
     }
 
     private void fillViewData() {
+        if(!rawData.containsKey("Nationality")){
+            finish();
+        }
         String nationality = rawData.get("Nationality").toString().toUpperCase();
         String position = rawData.get("Preferred Positions").toString().toUpperCase();
         String age = (int) Double.parseDouble(rawData.get("Age").toString()) + "";

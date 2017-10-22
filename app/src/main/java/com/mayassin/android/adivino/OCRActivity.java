@@ -99,11 +99,8 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
             hide();
         }
     };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
+
+
     private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -260,6 +257,12 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mCameraSource = null;
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -310,6 +313,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
 
 
     MaterialDialog correctPlayerDialog;
+    MaterialDialog progress;
     boolean dialogVisible;
     @Override
     public void MatchFound(final String text) {
@@ -339,6 +343,11 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     dialog.dismiss();
+                                    progress = new MaterialDialog.Builder(dialog.getContext())
+                                            .title("ANALYZING NEURAL NETWORK...")
+                                            .content("Loading " + toTitleCase(analyzedText))
+                                            .progress(true, 0)
+                                            .show();
                                     openPlayerStats(analyzedText);
                                 }
                             })
@@ -353,9 +362,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
     @Override
     protected void onResume() {
         super.onResume();
-        if(mPreview == null){
-            startCameraSource();
-        }
+        createCameraSource();
     }
 
     private void openPlayerStats(final String analyzedText) {
@@ -365,6 +372,9 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                     Log.e("OPENING: ", "OPENING: "+analyzedText);
                     Server server = new Server();
                     String jsonData = server.post("http://40.114.51.138:9612/get_score", "{\"detected_text\" : \""+analyzedText+"\"}");
+                    if(progress != null) {
+                        progress.dismiss();
+                    }
                     Intent intent = new Intent(getBaseContext(), PlayerStatsActivity.class);
                     intent.putExtra("json_data", jsonData);
                     intent.putExtra("player_id", analyzedText);
@@ -396,6 +406,9 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
     }
 
     private String analyseScreenWithMicrosoft() {
+
+        String result = "";
+        try{
         Gson gson = new Gson();
 
         Bitmap currentScreen = screenShot(mPreview);
@@ -404,8 +417,6 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
         OCR ocr;
-        String result = "";
-        try{
             ocr = client.recognizeText(inputStream, LanguageCodes.English, true);
             result = gson.toJson(ocr);
         } catch (Exception e) {
@@ -422,4 +433,15 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
         view.draw(canvas);
         return bitmap;
     }
+    public static String toTitleCase(String givenString) {
+        String[] arr = givenString.split(" ");
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(Character.toUpperCase(arr[i].charAt(0)))
+                    .append(arr[i].substring(1)).append(" ");
+        }
+        return sb.toString().trim();
+    }
+
 }
