@@ -323,7 +323,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
 
                     try {
                         Server server = new Server();
-                        Log.e("RESPONSE", server.post("http://40.114.51.138:9612/get_score", "{\"detected_text\" : \"Rooney\"}"));
+                        Log.e("RESPONSE", server.post("http://40.114.51.138:9612/get_score", "{\"detected_text\" : \"lukaku\"}"));
 
                     } catch (Exception e) {
                         Log.e("RESPONSE:ERROR", "error");
@@ -344,6 +344,15 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                                 @Override
                                 public void onDismiss(DialogInterface dialog) {
                                     dialogVisible = false;
+                                }
+                            })
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+//                                    intent.putExtra("player_id", analyzedText);
+//                                    startActivity(intent);
+
                                 }
                             })
                             .build();

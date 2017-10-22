@@ -24,7 +24,8 @@
             android:name=".OCRActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_ocr"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".PlayerStatsActivity"></activity>
     </application>
 
 </manifest>
