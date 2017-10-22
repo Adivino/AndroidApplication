@@ -37,6 +37,7 @@ public class SearchTextActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(searchTextSelectedReceiver);
     }
 
     @Override
