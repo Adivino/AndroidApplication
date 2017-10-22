@@ -1,6 +1,9 @@
 package com.mayassin.android.adivino;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +64,10 @@ public class RecycleViewAdapterSearch extends RecyclerView.Adapter<RecycleViewAd
             public void onClick(View view) {
                 String result = searchResults.get(getAdapterPosition());
 
+                Intent i = new Intent("SEARCHTEXTRECEIVED");
+                i.putExtra("player_name", result);
+                LocalBroadcastManager.getInstance(searchText.getContext())
+                        .sendBroadcast(i);
 
 // locaterInterface.goToExhibit(allExhibits.get(getAdapterPosition()).getTitle());
 //                popUpInterface.popUp(post);

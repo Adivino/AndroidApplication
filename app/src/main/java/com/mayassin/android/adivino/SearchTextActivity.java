@@ -1,12 +1,17 @@
 package com.mayassin.android.adivino;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -17,6 +22,9 @@ public class SearchTextActivity extends AppCompatActivity {
     EditText searchBarText;
     RecycleViewAdapterSearch adapterSearch;
 
+    private BroadcastReceiver searchTextSelectedReceiver;
+
+
     String[] knownPlayers = new String[]{"Messi", "Messy", "Ronaldo" , "Ronald", "Otters", "Others"};
 
     @Override
@@ -26,6 +34,17 @@ public class SearchTextActivity extends AppCompatActivity {
         initialize();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
     private void initialize() {
         initializeViews();
         knownPlayers = this.getResources().getStringArray(R.array.player_names);
@@ -33,6 +52,43 @@ public class SearchTextActivity extends AppCompatActivity {
         initializeSearchKeyboard();
 
         initializeChangeListeners();
+
+        searchTextSelectedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, final Intent broadCastIntent) {
+                final String playerName = broadCastIntent.getStringExtra("player_name");
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+
+
+                            Log.e("OPENING: ", "OPENING: "+playerName);
+                            Server server = new Server();
+                            String jsonData = server.post("http://40.114.51.138:9612/get_score", "{\"detected_text\" : \""+playerName+"\"}");
+                            Intent intent = new Intent(getBaseContext(), PlayerStatsActivity.class);
+                            intent.putExtra("json_data", jsonData);
+                            intent.putExtra("player_id", playerName);
+                            startActivity(intent);
+
+                        } catch (final Exception e) {
+                            Log.e("ERRORR SERVER", e.getMessage());
+                        }
+                    }
+                }).start();
+
+                try {
+
+                } catch (Exception e)
+                {
+                    Log.e("ERRORR SERVER", e.getMessage() + " ");
+                }
+            }
+        };
+
+
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(searchTextSelectedReceiver, new IntentFilter("SEARCHTEXTRECEIVED"));
 
     }
 

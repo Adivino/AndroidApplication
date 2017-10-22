@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,7 +28,7 @@ public class PlayerStatsActivity extends AppCompatActivity {
     int homeScore, awayScore;
     TextView playerNameTV, homeTeamScoreTV, awayTeamScoreTV,predictionResult, ardivinoTV, performanceResultTV, threatResultTV, extraInfoTV;
     ImageView playerIcon, homeIcon, awayIcon;
-    Button backButton;
+    Button backButton, moreInfoButton;
     Map<String, Object> rawData = new HashMap<String, Object>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,25 @@ public class PlayerStatsActivity extends AppCompatActivity {
         intializeViews();
         intializeData();
         setUpBackButton();
+        setUpMoreInfoButton();
 
+    }
+
+    private void setUpMoreInfoButton() {
+        moreInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                MaterialDialog moreInfo = new MaterialDialog.Builder(this)
+//                        .title(playerName)
+//                        .items(R.array.items)
+//                        .itemsCallback(new MaterialDialog.ListCallback() {
+//                            @Override
+//                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+//                            }
+//                        })
+//                        .show();
+            }
+        });
     }
 
     private void setUpBackButton() {
@@ -64,6 +83,8 @@ public class PlayerStatsActivity extends AppCompatActivity {
         threatResultTV = findViewById(R.id.threat_result);
         backButton = findViewById(R.id.back_button);
         extraInfoTV = findViewById(R.id.position_nationality_age);
+        moreInfoButton = findViewById(R.id.team_statistics_button);
+
 
         playerIcon = findViewById(R.id.profile_image);
         homeIcon = findViewById(R.id.home_team_image);

@@ -338,6 +338,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    dialog.dismiss();
                                     openPlayerStats(analyzedText);
                                 }
                             })
@@ -369,8 +370,8 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                     intent.putExtra("player_id", analyzedText);
                     startActivity(intent);
 
-                } catch (Exception e) {
-                    Log.e("RESPONSE:ERROR", "error");
+                } catch (final Exception e) {
+                        Log.e("ERRORR SERVER", e.getMessage());
                 }
             }
         }).start();

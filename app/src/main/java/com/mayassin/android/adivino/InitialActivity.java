@@ -35,18 +35,18 @@ public class InitialActivity extends AppCompatActivity {
     }
 
     private void testPostRequest() {
-        new Thread(new Runnable() {
-            public void run() {
-
-                try{
-                    Server server = new Server();
-                    Log.e("RESPONSE", server.run("http://40.114.51.138:9612/get_score"));
-
-                } catch (Exception e) {
-                    Log.e("RESPONSE:ERROR", "error");
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            public void run() {
+//
+//                try{
+//                    Server server = new Server();
+//                    Log.e("RESPONSE", server.run("http://40.114.51.138:9612/get_score"));
+//
+//                } catch (Exception e) {
+//                    Log.e("RESPONSE:ERROR", "error");
+//                }
+//            }
+//        }).start();
     }
 
     private void initialize() {
