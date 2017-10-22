@@ -46,15 +46,22 @@ public class PlayerStatsActivity extends AppCompatActivity {
         moreInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                MaterialDialog moreInfo = new MaterialDialog.Builder(this)
-//                        .title(playerName)
-//                        .items(R.array.items)
-//                        .itemsCallback(new MaterialDialog.ListCallback() {
-//                            @Override
-//                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-//                            }
-//                        })
-//                        .show();
+                int goalsScored = (int) Double.parseDouble(rawData.get("goals_scored").toString());
+                int assists = (int) Double.parseDouble(rawData.get("assists").toString());
+                int yellowCards = (int) Double.parseDouble(rawData.get("yellow_cards").toString());
+                int redCards = (int) Double.parseDouble(rawData.get("red_cards").toString());
+
+                String[] extraInfo = new String[] { "Goals Scored: " + goalsScored+"", "Assists: " + assists +"",
+                        "Yellow Cards: " + yellowCards + "", "Red cards " + redCards +""};
+                MaterialDialog moreInfo = new MaterialDialog.Builder(moreInfoButton.getContext())
+                        .title(playerName)
+                        .items(extraInfo)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                dialog.dismiss();
+                            }
+                        }).show();
             }
         });
     }
