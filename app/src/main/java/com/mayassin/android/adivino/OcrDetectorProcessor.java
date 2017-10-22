@@ -52,7 +52,6 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
                 String text = item.getValue().replaceAll("[-+.^:, ]","");
                 if(text.length() > 1) {
                     OCRImp.MatchFound(text);
-                    Log.d("TEXT READ:", text);
                 }
             }
         }

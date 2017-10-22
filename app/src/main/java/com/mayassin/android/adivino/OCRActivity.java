@@ -318,18 +318,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
         if(analyzedText != "" && !dialogVisible ) {
 
 
-            new Thread(new Runnable() {
-                public void run() {
 
-                    try {
-                        Server server = new Server();
-                        Log.e("RESPONSE", server.post("http://40.114.51.138:9612/get_score", "{\"detected_text\" : \"lukaku\"}"));
-
-                    } catch (Exception e) {
-                        Log.e("RESPONSE:ERROR", "error");
-                    }
-                }
-            }).start();
 
 
             this.runOnUiThread(new Runnable() {
@@ -349,10 +338,7 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-//                                    intent.putExtra("player_id", analyzedText);
-//                                    startActivity(intent);
-
+                                    openPlayerStats(analyzedText);
                                 }
                             })
                             .build();
@@ -361,6 +347,33 @@ public class OCRActivity extends AppCompatActivity implements  OCRInterface {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mPreview == null){
+            startCameraSource();
+        }
+    }
+
+    private void openPlayerStats(final String analyzedText) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Log.e("OPENING: ", "OPENING: "+analyzedText);
+                    Server server = new Server();
+                    String jsonData = server.post("http://40.114.51.138:9612/get_score", "{\"detected_text\" : \""+analyzedText+"\"}");
+                    Intent intent = new Intent(getBaseContext(), PlayerStatsActivity.class);
+                    intent.putExtra("json_data", jsonData);
+                    intent.putExtra("player_id", analyzedText);
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    Log.e("RESPONSE:ERROR", "error");
+                }
+            }
+        }).start();
     }
 
     private String textIsPlayer(String name) {

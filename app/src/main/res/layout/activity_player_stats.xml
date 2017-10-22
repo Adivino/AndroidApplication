@@ -10,7 +10,7 @@
 
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/back_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,17 +35,38 @@
             android:layout_height="96dp"
             android:layout_marginLeft="16dp"
             app:civ_border_width="3dp"
-            android:src="@drawable/lukaku"
+            android:src="@drawable/place_holder_150"
             app:civ_border_color="@color/md_grey_100"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="32dp"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/md_black_1000"
-            android:text="David Bowie"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/player_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Loading..."
+                android:textColor="@color/md_black_1000"
+                android:textSize="32dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="_"
+                android:id="@+id/position_nationality_age"
+                android:layout_marginLeft="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -79,20 +100,22 @@
             android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/home_team_image"
                 android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/place_holder_150"
-                android:layout_height="65dp" />
+                android:src="@drawable/place_holder_150" />
 
             <TextView
-            android:layout_width="wrap_content"
-            android:textSize="27sp"
-            android:textStyle="bold"
-            android:layout_marginStart="16dp"
-            android:textColor="@color/md_black_1000"
-            android:text="3"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content" />
+                android:id="@+id/home_team_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:text="_"
+                android:textColor="@color/md_black_1000"
+                android:textSize="27sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,32 +127,35 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/away_team_score"
                 android:layout_width="wrap_content"
-                android:textSize="27sp"
-                android:textStyle="bold"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/md_black_1000"
-                android:text="2"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
+                android:layout_marginStart="16dp"
+                android:text="_"
+                android:textColor="@color/md_black_1000"
+                android:textSize="27sp"
+                android:textStyle="bold" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/away_team_image"
                 android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginLeft="22dp"
-                android:src="@drawable/place_holder_150"
-                android:layout_height="65dp" />
+                android:src="@drawable/place_holder_150" />
 
             <TextView
+                android:id="@+id/prediction_result"
                 android:layout_width="match_parent"
-                android:textSize="37sp"
-                android:textStyle="bold"
-                android:textAlignment="textEnd"
-                android:gravity="end"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/md_green_300"
-                android:text="WIN"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:text="_"
+                android:textAlignment="textEnd"
+                android:textColor="@color/md_green_300"
+                android:textSize="37sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -182,17 +208,18 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/ardivino_score_result"
                 android:layout_width="wrap_content"
-                android:textSize="37sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:textAlignment="textEnd"
-                android:gravity="end"
-                android:layout_marginEnd="18dp"
-                android:textColor="@color/md_green_300"
-                android:text="8.4"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
+                android:layout_marginEnd="18dp"
+                android:layout_weight="0.5"
+                android:gravity="end"
+                android:text="_"
+                android:textAlignment="textEnd"
+                android:textColor="@color/md_green_300"
+                android:textSize="37sp"
+                android:textStyle="bold" />
             </LinearLayout>
 
         <LinearLayout
@@ -220,17 +247,18 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/recent_performance_Result"
                 android:layout_width="wrap_content"
-                android:textSize="37sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:textAlignment="textEnd"
-                android:gravity="end"
-                android:layout_marginEnd="18dp"
-                android:textColor="@color/md_yellow_700"
-                android:text="150"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
+                android:layout_marginEnd="18dp"
+                android:layout_weight="0.5"
+                android:gravity="end"
+                android:text="_"
+                android:textAlignment="textEnd"
+                android:textColor="@color/md_yellow_700"
+                android:textSize="37sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -258,28 +286,31 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/threat_result"
                 android:layout_width="wrap_content"
-                android:textSize="37sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:textAlignment="textEnd"
-                android:gravity="end"
-                android:layout_marginEnd="18dp"
-                android:textColor="@color/md_red_300"
-                android:text="3"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
+                android:layout_marginEnd="18dp"
+                android:layout_weight="0.5"
+                android:gravity="end"
+                android:text="_"
+                android:textAlignment="textEnd"
+                android:textColor="@color/md_red_300"
+                android:textSize="37sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:layout_width="match_parent"
-        android:text="TEAM STATISTICS"
-        android:textColor="@color/md_white_1000"
-        android:textStyle="normal"
-        android:textSize="22dp"
+        android:id="@+id/team_statistics_button"
         style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/md_teal_800"
-        android:layout_height="wrap_content" />
+        android:text="MORE INFORMATION"
+        android:padding="0dp"
+        android:textColor="@color/md_white_1000"
+        android:textSize="22dp"
+        android:textStyle="normal" />
 
 </LinearLayout>
